@@ -8,9 +8,6 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
-  @SerializeOptions({
-    excludePrefixes: ['_'],
-  })
   findAll() {
     return this.productsService.findAll()
   }
