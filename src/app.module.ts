@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common'
+import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose'
 import { MulterModule } from '@nestjs/platform-express';
+import * as cors from 'cors';
 
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -30,5 +31,15 @@ import { _DB_URI } from './config'
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+      consumer
+          .apply(cors())
+          .forRoutes({
+              path: '*',
+              method: RequestMethod.ALL
+          })
+  }
+}
 

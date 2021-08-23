@@ -15,15 +15,15 @@ This function aims to convert it to desired format.
   x: ??
 }
 ************************/
-import { MongooseObject } from 'src/database/mongooseObject.interface'
-import { ParsedMongooseObject } from 'src/database/parsedMongooseObject.interface'
+import { MongooseObject } from 'src/database/mongooseObject.type'
+import { ParsedMongooseObject } from 'src/database/parsedMongooseObject.type'
 import { isMongooseObject } from 'src/utils/isMongooseObject.helper'
 
 export const parseMongooseDocument = (document: MongooseObject): ParsedMongooseObject => {
 
   // get all params except _id and __v and use it to create new version of doc with id
   const { _id, __v, ...otherProps } = document
-  const parsedDocument: ParsedMongooseObject = {...otherProps, id: document._id }
+  const parsedDocument: ParsedMongooseObject<any> = {...otherProps, id: document._id }
 
   // if nested param is another Mongoose document (population...), then parse it as well
   for(const key in parsedDocument) {

@@ -16,8 +16,8 @@ This function aims to convert it to desired format.
 }, ...]
 ************************/
 import { parseMongooseDocument } from './parseMongooseDocument.helper';
-import { MongooseObject } from 'src/database/mongooseObject.interface'
-import { ParsedMongooseObject } from 'src/database/parsedMongooseObject.interface'
+import { MongooseObject } from './mongooseObject.type'
+import { ParsedMongooseObject } from './parsedMongooseObject.type'
 
 export const parseMongooseDocuments = (documents: MongooseObject[]): ParsedMongooseObject[]  => {
   const documentsParsed = documents.map(doc => parseMongooseDocument(doc))
