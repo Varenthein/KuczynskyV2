@@ -1,13 +1,20 @@
 import { AnyKeys } from 'mongoose';
 import { Model, FilterQuery, Document } from 'mongoose'
-import { parseMongooseDocuments } from 'src/database/parseMongooseDocuments.helper'
-import { parseMongooseDocument } from 'src/database/parseMongooseDocument.helper'
-import { MongooseObject } from 'src/database/mongooseObject.type'
-import { ParsedMongooseObject } from 'src/database/parsedMongooseObject.type'
+import { parseMongooseDocuments } from './parse-mongoose-documents.helper'
+import { parseMongooseDocument } from './parse-mongoose-document.helper'
+import { MongooseObject } from './mongoose-object.type'
+import { ParsedMongooseObject } from './parsed-mongoose-object.type'
 
 export abstract class EntityRepository<T extends Document, S> {
 
   constructor(private readonly entityModel: Model<T>) {}
+
+  async exists(query: FilterQuery<T>): Promise<boolean> {
+    // facade should "understand" standard id param name
+    if(query.id) query._id = query.id
+
+    return await this.entityModel.exists(query)
+  }
 
   async findAll(
     query?: FilterQuery<T>,
@@ -19,6 +26,10 @@ export abstract class EntityRepository<T extends Document, S> {
   }
 
   async create(data: AnyKeys<T>): Promise<S> {
+    // facade should "understand" standard id param name
+    if(data.id) data._id = data.id
+
+    // add document do db and return it
     const entity = new this.entityModel(data)
     await entity.save()
     const leanObject = entity.toObject() as MongooseObject

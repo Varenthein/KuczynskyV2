@@ -3,9 +3,9 @@ import { ReadProductDto } from './dto/read-product.dto'
 import { CreateProductBodyDto, CreateProductFilesDto } from './dto/create-product.dto'
 import { ProductsRepository } from './products.repository'
 import { CategoriesService } from 'src/categories/categories.service'
-import * as mongoose from 'mongoose'
 import { ImagesService } from 'src/images/images.service'
-import { flattenUploadedFiles } from 'src/utils/flattenUploadedFiles.helper'
+import { flattenUploadedFiles } from 'src/shared/helpers/flattenUploadedFiles.helper'
+import { prepareDatabaseId } from 'src/shared/database/prepare-database-id.helper'
 
 @Injectable()
 export class ProductsService {
@@ -26,8 +26,8 @@ export class ProductsService {
 
   async create(productBody: CreateProductBodyDto, productFiles: CreateProductFilesDto): Promise<ReadProductDto> {
 
-    // prepare _id for new product
-    const productId = new mongoose.mongo.ObjectId()
+    // prepare id for new product
+    const productId = prepareDatabaseId()
 
     // create image category for new product
     const productCategory = await this.categoriesService.create({ title: productBody.title, relatedProduct: productId })
@@ -53,12 +53,12 @@ export class ProductsService {
       file: thumbnailFile
     })
 
-    // get the current highest priority level
+    // get the current highest priority level and determine higher one
     const productPriority = await this.getCurrentHighestPriorityLevel() + 1
 
     // prepare and add new product to DB
     const newProduct = {
-      _id: productId,
+      id: productId,
       image: productImage.id,
       thumbnail: productThumbnail.id,
       priority: productPriority,

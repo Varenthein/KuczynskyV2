@@ -15,9 +15,9 @@ This function aims to convert it to desired format.
   x: ??
 }
 ************************/
-import { MongooseObject } from 'src/database/mongooseObject.type'
-import { ParsedMongooseObject } from 'src/database/parsedMongooseObject.type'
-import { isMongooseObject } from 'src/utils/isMongooseObject.helper'
+import { MongooseObject } from './mongoose-object.type'
+import { ParsedMongooseObject } from './parsed-mongoose-object.type'
+import { isMongooseObject } from './is-mongoose-object.helper'
 
 export const parseMongooseDocument = (document: MongooseObject): ParsedMongooseObject => {
 

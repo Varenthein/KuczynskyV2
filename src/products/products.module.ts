@@ -7,6 +7,7 @@ import { Product, ProductSchema } from './product.schema'
 import { ProductsRepository } from './products.repository'
 import { CategoriesModule } from 'src/categories/categories.module'
 import { ImagesModule } from 'src/images/images.module'
+import { FileValidatorService } from 'src/shared/services/file-validator.service'
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { ImagesModule } from 'src/images/images.module'
     ImagesModule
   ],
   controllers: [ProductsController],
-  providers: [ProductsService, ProductsRepository],
+  providers: [ProductsService, ProductsRepository, FileValidatorService],
 })
 
 export class ProductsModule {}

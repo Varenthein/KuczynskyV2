@@ -15,9 +15,9 @@ This function aims to convert it to desired format.
   x: ??
 }, ...]
 ************************/
-import { parseMongooseDocument } from './parseMongooseDocument.helper';
-import { MongooseObject } from './mongooseObject.type'
-import { ParsedMongooseObject } from './parsedMongooseObject.type'
+import { parseMongooseDocument } from './parse-mongoose-document.helper';
+import { MongooseObject } from './mongoose-object.type'
+import { ParsedMongooseObject } from './parsed-mongoose-object.type'
 
 export const parseMongooseDocuments = (documents: MongooseObject[]): ParsedMongooseObject[]  => {
   const documentsParsed = documents.map(doc => parseMongooseDocument(doc))

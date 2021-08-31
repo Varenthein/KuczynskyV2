@@ -1,4 +1,4 @@
-import { IsString, IsArray, IsNotEmpty, IsNotEmptyObject, MinLength, MaxLength } from 'class-validator'
+import { IsString, IsArray, IsNotEmpty, ArrayMinSize, ArrayMaxSize } from 'class-validator'
 
 export class CreateProductBodyDto {
   @IsString()
@@ -6,18 +6,16 @@ export class CreateProductBodyDto {
   title: string
 
   @IsArray()
-  @IsNotEmpty()
   details: string[]
 }
 
 export class CreateProductFilesDto {
-  @IsNotEmptyObject()
-  @MinLength(1)
-  @MaxLength(1)
+  @IsArray()
+  @ArrayMaxSize(1)
   thumbnail: Express.Multer.File[]
 
-  @IsNotEmptyObject()
-  @MinLength(1)
-  @MaxLength(1)
+  @IsArray()
+  @ArrayMinSize(1)
+  @ArrayMaxSize(1)
   image: Express.Multer.File[]
 }
